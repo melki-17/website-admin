@@ -1,6 +1,5 @@
 import db from "@/lib/db";
 import { auth } from "@clerk/nextjs/server"
-import { Store } from "lucide-react";
 import { NextResponse } from "next/server"
 
 export async function PATCH (
@@ -33,7 +32,7 @@ export async function PATCH (
             }
         })
 
-        return NextResponse.json(Store)
+        return NextResponse.json(store)
     } catch (error) {
         console.log('[STORE_PATCH]', error)
         return new NextResponse("Internal error", {status: 500})
@@ -66,7 +65,7 @@ export async function DELETE (
             },
         })
 
-        return NextResponse.json(Store)
+        return NextResponse.json(store)
     } catch (error) {
         console.log('[STORE_DELETE]', error)
         return new NextResponse("Internal error", {status: 500})

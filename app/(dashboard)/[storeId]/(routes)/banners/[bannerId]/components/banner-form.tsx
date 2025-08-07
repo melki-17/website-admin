@@ -16,8 +16,6 @@ import toast from "react-hot-toast"
 import axios from "axios"
 import { useParams, useRouter } from "next/navigation"
 import { AlertModal } from "@/components/modals/alert-modal"
-import { ApiAlert } from "@/components/ui/api-alert"
-import { useOrigin } from "@/hooks/use-origin"
 import ImageUpload from "@/components/ui/image-upload"
 
 interface BannerFormProps {
@@ -36,7 +34,7 @@ export const BannerForm: React.FC<BannerFormProps> = ({
 }) => {
     const params = useParams()
     const router = useRouter()
-    const origin = useOrigin()
+    
 
     const [open, setOpen] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -65,7 +63,7 @@ export const BannerForm: React.FC<BannerFormProps> = ({
             router.refresh();
             router.push(`/${params.storeId}/banners`);
             toast.success(toastMessage);
-        } catch (error) {
+        } catch  {
             toast.error("Cek kembali data yang diinput")
         } finally {
             setLoading(false)
@@ -79,7 +77,7 @@ export const BannerForm: React.FC<BannerFormProps> = ({
             router.refresh()
             router.push(`/${params.storeId}/banners`)
             toast.success("Banner berhasil di hapus")
-        } catch (error) {
+        } catch  {
             toast.error("Cek kembali data dan koneksi mu")
         } finally {
             setLoading(false)

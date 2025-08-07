@@ -34,7 +34,7 @@ export const CellAction: React.FC<CellActionProps> = ({
             router.refresh()
             router.push(`/${params.storeId}/categories`)
             toast.success("Category berhasil di hapus")
-        } catch (error) {
+        } catch  {
             toast.error("Cek kembali data dan koneksi mu")
         } finally {
             setLoading(false)

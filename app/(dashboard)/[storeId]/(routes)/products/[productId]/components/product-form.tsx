@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react'
 import * as z from "zod"
 import { useState } from "react"
 
@@ -8,31 +9,30 @@ import { Heading } from "@/components/ui/heading"
 import { Separator } from "@/components/ui/separator"
 import {  Category, Image, Product } from "@prisma/client"
 import { Trash } from "lucide-react"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import toast from "react-hot-toast"
 import axios from "axios"
 import { useParams, useRouter } from "next/navigation"
 import { AlertModal } from "@/components/modals/alert-modal"
-import { ApiAlert } from "@/components/ui/api-alert"
-import { useOrigin } from "@/hooks/use-origin"
 import ImageUpload from "@/components/ui/image-upload"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
 
+
 interface ProductFormProps {
-    initialData: Product & {
+    initialData: (Product & {
         images: Image[]
-    } | null;
+    }) | null;
     categories: Category[];
 }
 
 const formSchema = z.object({
     name: z.string().min(1),
     images: z.object({url: z.string()}).array(),
-    price: z.coerce.number().min(1),
+    price: z.number().min(0.01, "Price must be greater than 0"),
     categoryId: z.string().min(1),
     isFeatured: z.boolean().default(false).optional(),
     isArchived: z.boolean().default(false).optional(),
@@ -45,7 +45,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
 }) => {
     const params = useParams()
     const router = useRouter()
-    const origin = useOrigin()
+
 
     const [open, setOpen] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -61,10 +61,10 @@ export const ProductForm: React.FC<ProductFormProps> = ({
             ...initialData,
             price: parseFloat(String(initialData?.price)),
         } : {
-            name: '',
+            name: "",
             images: [],
             price: 0,
-            categoryId: '',
+            categoryId: "",
             isFeatured: false,
             isArchived: false,
         }
@@ -81,7 +81,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
             router.refresh();
             router.push(`/${params.storeId}/products`);
             toast.success(toastMessage);
-        } catch (error) {
+        } catch  {
             toast.error("Cek kembali data yang diinput")
         } finally {
             setLoading(false)
@@ -95,7 +95,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
             router.refresh()
             router.push(`/${params.storeId}/products`)
             toast.success("Product berhasil di hapus")
-        } catch (error) {
+        } catch  {
             toast.error("Cek kembali data dan koneksi mu")
         } finally {
             setLoading(false)

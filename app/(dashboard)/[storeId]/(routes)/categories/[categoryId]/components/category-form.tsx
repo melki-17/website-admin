@@ -16,8 +16,6 @@ import toast from "react-hot-toast"
 import axios from "axios"
 import { useParams, useRouter } from "next/navigation"
 import { AlertModal } from "@/components/modals/alert-modal"
-import { ApiAlert } from "@/components/ui/api-alert"
-import { useOrigin } from "@/hooks/use-origin"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 interface CategoryFormProps {
@@ -37,7 +35,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
 }) => {
     const params = useParams()
     const router = useRouter()
-    const origin = useOrigin()
+
 
     const [open, setOpen] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -66,7 +64,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
             router.refresh();
             router.push(`/${params.storeId}/categories`);
             toast.success(toastMessage);
-        } catch (error) {
+        } catch  {
             toast.error("Cek kembali data yang diinput")
         } finally {
             setLoading(false)
@@ -80,7 +78,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
             router.refresh()
             router.push(`/${params.storeId}/categories`)
             toast.success("Category berhasil di hapus")
-        } catch (error) {
+        } catch  {
             toast.error("Cek kembali data dan koneksi mu")
         } finally {
             setLoading(false)

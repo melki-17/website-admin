@@ -40,7 +40,7 @@ const onSubmit = async (values: z.infer<typeof formSchema>) => {
         console.log(response.data);
         toast.success("Berhasil Membuat Toko")
         window.location.assign(`/${response.data.id}`)
-    } catch (error) {
+    } catch  {
         toast.error("Gagal Membuat Toko")
     } finally {
         setLoading(false);
