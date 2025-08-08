@@ -32,7 +32,7 @@ interface ProductFormProps {
 const formSchema = z.object({
     name: z.string().min(1),
     images: z.object({url: z.string()}).array(),
-    price: z.coerce.number().min(1),
+    price: z.number().min(1),
     categoryId: z.string().min(1),
     isFeatured: z.boolean().default(false).optional(),
     isArchived: z.boolean().default(false).optional(),
@@ -168,7 +168,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                         <FormItem>
                             <FormLabel>Harga</FormLabel>
                             <FormControl>
-                                <Input placeholder="Rp" disabled={loading} {...field} type="number" />
+                                <Input placeholder="Rp" disabled={loading} {...field} type="number" onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
