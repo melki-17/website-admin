@@ -32,7 +32,7 @@ interface ProductFormProps {
 const formSchema = z.object({
     name: z.string().min(1),
     images: z.object({url: z.string()}).array(),
-    price: z.number().min(0.01, "Price must be greater than 0"),
+    price: z.coerce.number().min(1, "Price must be greater than 0"),
     categoryId: z.string().min(1),
     isFeatured: z.boolean().default(false).optional(),
     isArchived: z.boolean().default(false).optional(),
@@ -55,7 +55,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
     const toastMessage = initialData ? "Product berhasil di edit" : "Product berhasil di buat"
     const action = initialData ? "simpan" : "Buat Product"
 
-    const form = useForm<ProductFormValues>({
+    const form = useForm<ProductFormValues, any, ProductFormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: initialData ? {
             ...initialData,
