@@ -55,7 +55,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
     const toastMessage = initialData ? "Product berhasil di edit" : "Product berhasil di buat"
     const action = initialData ? "simpan" : "Buat Product"
 
-    const form = useForm<ProductFormValues, any, ProductFormValues>({
+    const form = useForm<ProductFormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: initialData ? {
             ...initialData,
